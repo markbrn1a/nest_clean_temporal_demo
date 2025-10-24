@@ -1,5 +1,6 @@
 # NestJS Clean Architecture with Temporal Demo
 
+TODO: FIX ISSUE WITH BG NODE PROCESS NOT SHOTING DOWN
 A comprehensive NestJS application demonstrating **Clean Architecture** (Hexagonal Architecture) with **Temporal.io** workflow orchestration, **CQRS** pattern, and **Domain-Driven Design**.
 
 ## 🏗️ Architecture Overview

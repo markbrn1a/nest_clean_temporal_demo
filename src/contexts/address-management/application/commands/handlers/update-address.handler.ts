@@ -2,18 +2,24 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { UpdateAddressCommand } from '../update-address.command';
 import { Address } from '../../../domain/entities/address.entity';
-import * as addressRepositoryPort from '../../ports/address.repository.port';
-import * as domainEventBusInterface from '../../../../../shared/integration/domain-event-bus.interface';
+import {
+  ADDRESS_REPOSITORY,
+  type AddressRepositoryPort,
+} from '../../ports/address.repository.port';
+import {
+  DOMAIN_EVENT_BUS,
+  type DomainEventBus,
+} from '../../../../../shared/integration/domain-event-bus.interface';
 
 @CommandHandler(UpdateAddressCommand)
 export class UpdateAddressHandler
   implements ICommandHandler<UpdateAddressCommand>
 {
   constructor(
-    @Inject(addressRepositoryPort.ADDRESS_REPOSITORY)
-    private readonly addressRepository: addressRepositoryPort.AddressRepositoryPort,
-    @Inject(domainEventBusInterface.DOMAIN_EVENT_BUS)
-    private readonly eventBus: domainEventBusInterface.DomainEventBus,
+    @Inject(ADDRESS_REPOSITORY)
+    private readonly addressRepository: AddressRepositoryPort,
+    @Inject(DOMAIN_EVENT_BUS)
+    private readonly eventBus: DomainEventBus,
   ) {}
 
   async execute(command: UpdateAddressCommand): Promise<Address> {

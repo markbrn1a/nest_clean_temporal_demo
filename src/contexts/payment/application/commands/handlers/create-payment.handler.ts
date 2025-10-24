@@ -4,7 +4,7 @@ import { CreatePaymentCommand } from '../create-payment.command';
 import { Payment } from '../../../domain/entities/payment.entity';
 import {
   PAYMENT_REPOSITORY,
-  PaymentRepositoryPort,
+  type PaymentRepositoryPort,
 } from '../../ports/payment.repository.port';
 
 @CommandHandler(CreatePaymentCommand)

@@ -4,7 +4,7 @@ import { GetPaymentQuery } from '../get-payment.query';
 import { Payment } from '../../../domain/entities/payment.entity';
 import {
   PAYMENT_REPOSITORY,
-  PaymentRepositoryPort,
+  type PaymentRepositoryPort,
 } from '../../ports/payment.repository.port';
 
 @QueryHandler(GetPaymentQuery)

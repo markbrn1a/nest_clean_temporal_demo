@@ -5,7 +5,7 @@ import { Customer } from '../../../domain/entities/customer.entity';
 import { CustomerId } from '../../../domain/value-objects/customer-id.vo';
 import {
   CUSTOMER_REPOSITORY,
-  CustomerRepositoryPort,
+  type CustomerRepositoryPort,
 } from '../../ports/customer.repository.port';
 
 @QueryHandler(GetCustomerQuery)

@@ -2,8 +2,14 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { CreateCustomerCommand } from '../create-customer.command';
 import { Customer } from '../../../domain/entities/customer.entity';
-import * as customerRepositoryPort from '../../ports/customer.repository.port';
-import * as domainEventBusInterface from '../../../../../shared/integration/domain-event-bus.interface';
+import {
+  CUSTOMER_REPOSITORY,
+  type CustomerRepositoryPort,
+} from '../../ports/customer.repository.port';
+import {
+  DOMAIN_EVENT_BUS,
+  type DomainEventBus,
+} from '../../../../../shared/integration/domain-event-bus.interface';
 import { CustomerAlreadyExistsError } from '../../../domain/exceptions/customer-already-exists.error';
 
 @CommandHandler(CreateCustomerCommand)
@@ -11,10 +17,10 @@ export class CreateCustomerHandler
   implements ICommandHandler<CreateCustomerCommand>
 {
   constructor(
-    @Inject(customerRepositoryPort.CUSTOMER_REPOSITORY)
-    private readonly customerRepository: customerRepositoryPort.CustomerRepositoryPort,
-    @Inject(domainEventBusInterface.DOMAIN_EVENT_BUS)
-    private readonly domainEventBus: domainEventBusInterface.DomainEventBus,
+    @Inject(CUSTOMER_REPOSITORY)
+    private readonly customerRepository: CustomerRepositoryPort,
+    @Inject(DOMAIN_EVENT_BUS)
+    private readonly domainEventBus: DomainEventBus,
   ) {}
 
   async execute(command: CreateCustomerCommand): Promise<Customer> {

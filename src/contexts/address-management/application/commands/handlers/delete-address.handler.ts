@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { DeleteAddressCommand } from '../delete-address.command';
 import {
   ADDRESS_REPOSITORY,
-  AddressRepositoryPort,
+  type AddressRepositoryPort,
 } from '../../ports/address.repository.port';
 
 @CommandHandler(DeleteAddressCommand)

@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { DeletePaymentCommand } from '../delete-payment.command';
 import {
   PAYMENT_REPOSITORY,
-  PaymentRepositoryPort,
+  type PaymentRepositoryPort,
 } from '../../ports/payment.repository.port';
 
 @CommandHandler(DeletePaymentCommand)

@@ -4,7 +4,7 @@ import { ListCustomersQuery } from '../list-customers.query';
 import { Customer } from '../../../domain/entities/customer.entity';
 import {
   CUSTOMER_REPOSITORY,
-  CustomerRepositoryPort,
+  type CustomerRepositoryPort,
 } from '../../ports/customer.repository.port';
 
 @QueryHandler(ListCustomersQuery)

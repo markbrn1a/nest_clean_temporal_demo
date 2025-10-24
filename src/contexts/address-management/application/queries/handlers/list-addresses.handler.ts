@@ -4,7 +4,7 @@ import { ListAddressesQuery } from '../list-addresses.query';
 import { Address } from '../../../domain/entities/address.entity';
 import {
   ADDRESS_REPOSITORY,
-  AddressRepositoryPort,
+  type AddressRepositoryPort,
 } from '../../ports/address.repository.port';
 
 @QueryHandler(ListAddressesQuery)

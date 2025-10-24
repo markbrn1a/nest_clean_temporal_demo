@@ -5,7 +5,7 @@ import { Payment } from '../../../domain/entities/payment.entity';
 import { PaymentStatus } from '../../../domain/value-objects/payment-status.vo';
 import {
   PAYMENT_REPOSITORY,
-  PaymentRepositoryPort,
+  type PaymentRepositoryPort,
 } from '../../ports/payment.repository.port';
 
 @CommandHandler(UpdatePaymentCommand)

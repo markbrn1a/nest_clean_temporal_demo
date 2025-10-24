@@ -4,8 +4,14 @@ import { Inject } from '@nestjs/common';
 import { UpdateCustomerCommand } from '../update-customer.command';
 import { Customer } from '../../../domain/entities/customer.entity';
 import { CustomerId } from '../../../domain/value-objects/customer-id.vo';
-import * as customerRepositoryPort from '../../ports/customer.repository.port';
-import * as domainEventBusInterface from '../../../../../shared/integration/domain-event-bus.interface';
+import {
+  type CustomerRepositoryPort,
+  CUSTOMER_REPOSITORY,
+} from '../../ports/customer.repository.port';
+import {
+  DOMAIN_EVENT_BUS,
+  type DomainEventBus,
+} from '../../../../../shared/integration/domain-event-bus.interface';
 import { CustomerNotFoundError } from '../../../domain/exceptions/customer-not-found.error';
 import { CustomerAlreadyExistsError } from '../../../domain/exceptions/customer-already-exists.error';
 
@@ -14,10 +20,10 @@ export class UpdateCustomerHandler
   implements ICommandHandler<UpdateCustomerCommand>
 {
   constructor(
-    @Inject(customerRepositoryPort.CUSTOMER_REPOSITORY)
-    private readonly customerRepository: customerRepositoryPort.CustomerRepositoryPort,
-    @Inject(domainEventBusInterface.DOMAIN_EVENT_BUS)
-    private readonly domainEventBus: domainEventBusInterface.DomainEventBus,
+    @Inject(CUSTOMER_REPOSITORY)
+    private readonly customerRepository: CustomerRepositoryPort,
+    @Inject(DOMAIN_EVENT_BUS)
+    private readonly domainEventBus: DomainEventBus,
   ) {}
 
   async execute(command: UpdateCustomerCommand): Promise<Customer> {

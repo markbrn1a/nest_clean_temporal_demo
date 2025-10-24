@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { DeleteUserCommand } from '../delete-user.command';
 import {
   USER_REPOSITORY,
-  UserRepositoryPort,
+  type UserRepositoryPort,
 } from '../../ports/user.repository.port';
 
 @CommandHandler(DeleteUserCommand)

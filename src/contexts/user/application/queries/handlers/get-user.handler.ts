@@ -4,7 +4,7 @@ import { GetUserQuery } from '../get-user.query';
 import { User } from '../../../domain/entities/user.entity';
 import {
   USER_REPOSITORY,
-  UserRepositoryPort,
+  type UserRepositoryPort,
 } from '../../ports/user.repository.port';
 
 @QueryHandler(GetUserQuery)

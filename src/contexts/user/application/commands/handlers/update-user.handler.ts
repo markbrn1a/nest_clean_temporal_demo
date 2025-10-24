@@ -4,7 +4,7 @@ import { UpdateUserCommand } from '../update-user.command';
 import { User } from '../../../domain/entities/user.entity';
 import {
   USER_REPOSITORY,
-  UserRepositoryPort,
+  type UserRepositoryPort,
 } from '../../ports/user.repository.port';
 
 @CommandHandler(UpdateUserCommand)

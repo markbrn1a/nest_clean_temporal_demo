@@ -4,7 +4,7 @@ import { Inject } from '@nestjs/common';
 import { DeleteCustomerCommand } from '../delete-customer.command';
 import { CustomerId } from '../../../domain/value-objects/customer-id.vo';
 import {
-  CustomerRepositoryPort,
+  type CustomerRepositoryPort,
   CUSTOMER_REPOSITORY,
 } from '../../ports/customer.repository.port';
 
