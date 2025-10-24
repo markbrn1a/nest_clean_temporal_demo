@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String     @id @default(cuid())
+  name      String
+  email     String     @unique
+  addressId String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  customers Customer[]
+  payments  Payment[]
+  address   Address?   @relation(fields: [addressId], references: [id])
+}
+
+model Address {
+  id        String     @id @default(cuid())
+  street    String
+  city      String
+  zipCode   String
+  country   String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  customers Customer[]
+  users     User[]
+}
+
+model Customer {
+  id          String    @id @default(cuid())
+  userId      String
+  companyName String
+  contactName String
+  email       String
+  phone       String?
+  addressId   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  address     Address?  @relation(fields: [addressId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments    Payment[]
+
+  @@unique([userId, email])
+}
+
+model Payment {
+  id          String        @id @default(cuid())
+  userId      String
+  customerId  String?
+  amount      Float
+  currency    String        @default("USD")
+  status      PaymentStatus @default(PENDING)
+  description String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  customer    Customer?     @relation(fields: [customerId], references: [id])
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
