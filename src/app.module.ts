@@ -18,6 +18,7 @@ import { IntegrationModule } from './shared/integration/integration.module';
     AddressManagementModule,
     OnboardingModule,
     IntegrationModule,
+    TemporalModule,
   ],
   controllers: [],
   providers: [],

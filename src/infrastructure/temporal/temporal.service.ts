@@ -35,6 +35,35 @@ export class TemporalService {
   }
 
   /**
+   * Signal with Start - Start workflow if not exists, signal if exists
+   * @param workflowType - The name of the workflow function
+   * @param options - Workflow and signal options
+   * @returns Promise<string> - The workflow execution ID
+   */
+  async signalWithStart<T extends any[]>(
+    workflowType: string,
+    options: {
+      taskQueue: string;
+      workflowId: string;
+      signal: string;
+      signalArgs: any[];
+      args?: T;
+      searchAttributes?: Record<string, any>;
+    },
+  ): Promise<string> {
+    const handle = await this.client.workflow.signalWithStart(workflowType, {
+      taskQueue: options.taskQueue,
+      workflowId: options.workflowId,
+      signal: options.signal,
+      signalArgs: options.signalArgs,
+      args: options.args || ([] as unknown as T),
+      searchAttributes: options.searchAttributes,
+    });
+
+    return handle.workflowId;
+  }
+
+  /**
    * Get a workflow handle by ID
    * @param workflowId - The workflow ID
    * @returns WorkflowHandle

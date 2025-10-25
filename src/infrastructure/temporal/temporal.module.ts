@@ -13,6 +13,7 @@ import {
   TEMPORAL_WORKER,
 } from './temporal.factory';
 import { Worker } from '@temporalio/worker';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Global()
 @Module({
@@ -20,6 +21,7 @@ import { Worker } from '@temporalio/worker';
     TemporalClientFactory,
     TemporalWorkerFactory,
     TemporalService,
+    PrismaService,
     Logger,
   ],
   exports: [TEMPORAL_CLIENT, TEMPORAL_WORKER, TemporalService],

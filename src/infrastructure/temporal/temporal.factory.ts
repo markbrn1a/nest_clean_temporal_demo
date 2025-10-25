@@ -2,12 +2,13 @@ import { FactoryProvider, Logger } from '@nestjs/common';
 import { Client, Connection } from '@temporalio/client';
 import { Worker } from '@temporalio/worker';
 import { join } from 'path';
+import { PrismaService } from '../prisma/prisma.service';
 import * as userActivities from '../../contexts/user/infrastructure/temporal/activities/user-activities';
 import * as paymentActivities from '../../contexts/payment/infrastructure/temporal/activities/payment-activities';
 import * as customerActivities from '../../contexts/customer/infrastructure/temporal/activities/customer-activities';
 
-export const TEMPORAL_CLIENT = 'TEMPORAL_CLIENT';
-export const TEMPORAL_WORKER = 'TEMPORAL_WORKER';
+export const TEMPORAL_CLIENT = Symbol('TEMPORAL_CLIENT');
+export const TEMPORAL_WORKER = Symbol('TEMPORAL_WORKER');
 
 export const TemporalClientFactory: FactoryProvider<Client> = {
   provide: TEMPORAL_CLIENT,
@@ -26,7 +27,12 @@ export const TemporalClientFactory: FactoryProvider<Client> = {
 
 export const TemporalWorkerFactory: FactoryProvider<Worker> = {
   provide: TEMPORAL_WORKER,
-  useFactory: async (logger: Logger) => {
+  useFactory: async (logger: Logger, prismaService: PrismaService) => {
+    // Inject dependencies into activities
+    paymentActivities.injectDependencies(prismaService);
+    customerActivities.injectDependencies(prismaService);
+    userActivities.injectDependencies(prismaService);
+
     const worker = await Worker.create({
       workflowsPath: join(__dirname, 'workflows'),
       activities: {
@@ -51,5 +57,5 @@ export const TemporalWorkerFactory: FactoryProvider<Worker> = {
     logger.log('Temporal Worker created and started');
     return worker;
   },
-  inject: [Logger],
+  inject: [Logger, PrismaService],
 };

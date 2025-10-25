@@ -43,9 +43,11 @@ export interface SendEmailInput {
   body: string;
 }
 
-// Helper function to create Prisma service
-function createPrismaService() {
-  return new PrismaService();
+let prismaService: PrismaService;
+
+// Function to inject dependencies (called during worker setup)
+export function injectDependencies(prisma: PrismaService) {
+  prismaService = prisma;
 }
 
 export async function validateUserData(
@@ -79,8 +81,6 @@ export async function createAddress(
 ): Promise<string> {
   Context.current().log.info('Creating address', { input });
 
-  const prisma = createPrismaService();
-
   // Create address using domain entity
   const address = Address.create(
     input.street,
@@ -90,7 +90,7 @@ export async function createAddress(
   );
 
   // Save to database
-  await prisma.address.create({
+  await prismaService.address.create({
     data: {
       id: address.getId().getValue(),
       street: address.getStreet().getValue(),
@@ -110,13 +110,11 @@ export async function createAddress(
 export async function createUser(input: CreateUserInput): Promise<string> {
   Context.current().log.info('Creating user', { input });
 
-  const prisma = createPrismaService();
-
   // Create user using domain entity
   const user = User.create(input.name, input.email, input.addressId);
 
   // Save to database
-  await prisma.user.create({
+  await prismaService.user.create({
     data: {
       id: user.getId().getValue(),
       name: user.getName(),
@@ -137,8 +135,6 @@ export async function createCustomer(
 ): Promise<string> {
   Context.current().log.info('Creating customer', { input });
 
-  const prisma = createPrismaService();
-
   // Create customer using domain entity
   const customer = Customer.create(
     input.userId,
@@ -150,7 +146,7 @@ export async function createCustomer(
   );
 
   // Save to database
-  await prisma.customer.create({
+  await prismaService.customer.create({
     data: {
       id: customer.getId().getValue(),
       userId: customer.getUserId().getValue(),

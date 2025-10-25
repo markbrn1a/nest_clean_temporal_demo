@@ -15,7 +15,6 @@ export class CustomerCreatedEvent implements DomainEvent {
     public readonly contactName: string,
     public readonly phone?: string,
     public readonly addressId?: string,
-    public readonly context?: string,
   ) {
     this.eventId = uuid();
     this.occurredOn = new Date();
@@ -26,7 +25,6 @@ export class CustomerCreatedEvent implements DomainEvent {
       contactName: this.contactName,
       phone: this.phone,
       addressId: this.addressId,
-      context: this.context,
     };
   }
 }
